@@ -1,0 +1,39 @@
+
+<project name="ImageEncrypter" default="jar" basedir=".">
+
+  	<property name="name" value="ImageEncrypt"/>
+  	<property name="version" value="1.0"/>
+
+	<property name="jarfile" value="${name}.jar" />
+	
+	<property name="build" value="."/>
+  	<property name="src" value="."/>
+	
+	<!-- Complies the project -->
+	<target name="compile" >
+		<javac srcdir="${src}" destdir="${build}" includes="**/*.java">
+			
+			<!-- XLint -->
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+	</target>
+
+	<!-- makes a jar file -->
+ 	<target name="jar" depends="compile" description="Makes the madcat jar">
+		<jar destfile="${jarfile}" basedir="${build}">
+		   	<manifest>
+                <attribute name="Main-Class" value="ImageWin"/>
+			</manifest>
+		</jar>
+		
+		<signjar jar="${jarfile}" keystore="keystore" alias="iencrypt" storepass="appleapple"/>
+    </target>
+
+	<!-- Cleans up the build -->
+ 	<target name="clean">
+    	<delete>
+    		<fileset dir="${build}" includes="**/*.class"/>
+  		</delete>
+  	</target>
+	
+</project>
